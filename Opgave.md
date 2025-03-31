@@ -1,4 +1,4 @@
-# Birgers Bolcher
+# Birgers Bolscher
 ### En SQL og database øvelse til Nodejs
 Birger fik en bog om bolcher til sin fødselsdag da han blev 14 år. Siden har han eksperimenteret med fremstilling af mange forskellige bolcher og han har flittigt delt smagsprøver ud til sin familie og venner.
 
@@ -24,48 +24,75 @@ Forklaring følger også i undervisningen
 
 1.2	Tabellen skal indeholde de viste felter og data – du bestemmer både feltnavne og datatyper
 
- ![Birgers Bolcher](./assets/birgers.png)
+ ![Birgers Bolscher](./assets/birgers.png)
 ## Øvelse 2
 Skriv en sql sætning for hver af følgende
 
 2.1	Udskriv alle informationer om alle bolcher.
-`SELECT * FROM Bolcher`
+`SELECT * FROM Bolscher`
 
 2.2	Find og udskriv navnene på alle de røde bolcher.
-`SELECT navn FROM Bolcher WHERE farve="Rød"`
+`SELECT navn FROM Bolscher WHERE farve="Rød"`
 
 2.3	Find og udskriv navnene på alle de røde og de blå bolcher, i samme SQL udtræk.
-`SELECT navn FROM Bolcher WHERE farve="Rød" OR farve="Blå"`
+`SELECT navn FROM Bolscher WHERE farve="Rød" OR farve="Blå"`
 
 2.4	Find og udskriv navnene på alle bolcher, der ikke er røde, sorteret alfabetisk.
-`SELECT navn FROM Bolcher WHERE NOT farve="Rød" ORDER BY navn`
-el. `SELECT navn FROM Bolcher WHERE farve!="Rød" ORDER BY navn`
+`SELECT navn FROM Bolscher WHERE NOT farve="Rød" ORDER BY navn`
+el. `SELECT navn FROM Bolscher WHERE farve!="Rød" ORDER BY navn`
 
 2.5	Find og udskriv navnene på alle bolcher som starter med et “B”.
-`SELECT navn FROM Bolcher WHERE navn LIKE "B%"`
+`SELECT navn FROM Bolscher WHERE navn LIKE "B%"`
 
 2.6	Find og udskriv navene på alle bolcher, hvor der i navnet findes mindst ét “e”.
-`SELECT navn FROM Bolcher WHERE navn LIKE '%E'`
+`SELECT navn FROM Bolscher WHERE navn LIKE '%E'`
 
 2.7	Find og udskriv navn og vægt på alle bolcher der vejer mindre end 10 gram, sorter stigende efter vægt.
-`SELECT navn FROM Bolcher WHERE vægt <10 ORDER BY vægt DESC`
+`SELECT navn FROM Bolscher WHERE vægt <10 ORDER BY vægt DESC`
 
 2.8	Find og udskriv navne på alle bolcher, der vejer mellem 10 og 12 gram (begge tal inklusiv), sorteret alfabetisk og derefter vægt.
-`SELECT navn FROM Bolcher WHERE vægt >=10 AND vægt <=12 ORDER BY navn`
-`SELECT navn FROM Bolcher WHERE vægt >=10 AND vægt <=12 ORDER BY vægt`  
+`SELECT navn FROM Bolscher WHERE vægt >=10 AND vægt <=12 ORDER BY navn`
+`SELECT navn FROM Bolscher WHERE vægt >=10 AND vægt <=12 ORDER BY vægt`  
 
 2.9	Find og udskriv de tre største (tungeste) bolcher.
-`SELECT * FROM Bolcher ORDER BY vægt DESC LIMIT 3`
+`SELECT * FROM Bolscher ORDER BY vægt DESC LIMIT 3`
 
 2.10 Udskriv alle informationer om et tilfældigt bolche, udvalgt af systemet (sql).
-`SELECT * FROM Bolcher ORDER BY RANDOM() LIMIT 1`
+`SELECT * FROM Bolscher ORDER BY RANDOM() LIMIT 1`
 
 ## Øvelse 3
-3.1	Normaliser tabellen Bolcher så der dannes ”domænetabeller” til de felter hvor flere bolcher ofte har samme værdi.
+3.1	Normaliser tabellen Bolscher så der dannes ”domænetabeller” til de felter hvor flere bolcher ofte har samme værdi.
+
+`CREATE TABLE Bolscher_Normalized (
+    id INTEGER PRIMARY KEY,
+    navn TEXT NOT NULL,
+    farve_id INTEGER,
+    vægt INTEGER NOT NULL,
+    surhed_id INTEGER,
+    styrke_id INTEGER,
+    smag_id INTEGER,
+    omkostninger INTEGER NOT NULL,
+    FOREIGN KEY (farve_id) REFERENCES Farve(id),
+    FOREIGN KEY (surhed_id) REFERENCES Surhed(id),
+    FOREIGN KEY (styrke_id) REFERENCES Styrke(id),
+    FOREIGN KEY (smag_id) REFERENCES Smag(id)
+);`
+
+`INSERT INTO Bolscher_Normalized (id, navn, farve_id, vægt, surhed_id, styrke_id, smag_id, omkostninger)
+SELECT 
+    b.id, 
+    b.navn, 
+    (SELECT f.id FROM Farve f WHERE f.farve = b.farve) AS farve_id,
+    b.vægt, 
+    (SELECT s.id FROM Surhed s WHERE s.surhed = b.surhed) AS surhed_id,
+    (SELECT st.id FROM Styrke st WHERE st.styrke = b.styrke) AS styrke_id,
+    (SELECT sm.id FROM Smag sm WHERE sm.smag = b.smag) AS smag_id,
+    b.omkostninger
+FROM Bolscher b;`
 
 ## Øvelse 4
-
 4.1	Gentag øvelse 2, men nu med inner joins
+
 ## Øvelse 5
 Nettopris for et bolche er råvareprisen plus 250 % (begge uden moms) 
 

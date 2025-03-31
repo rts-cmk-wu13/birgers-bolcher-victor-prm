@@ -1,0 +1,9 @@
+id,navn,farve,vægt,surhed,styrke,smag,omkostninger
+1,Jordbær,Rød,11,Sød,Mild,Jordbær,16
+2,Appelsin,Orange,12,Sød,Mild,Appelsin,13
+3,Citron,Gul,10,Bitter,Stærk,Citron,14
+4,Salmiaktop,Sort,6,Sød,Stærk,Salmiak,12
+5,Blå Haj,Blå,22,Let Bitter,Medium,Anis,19
+6,Rød Perle,Rød,8,Sød,Medium,Jordbær,9
+7,Gul Perle,Gul,8,Bitter,Medium,Citron,10
+8,Blå Perle,Blå,8,Let Bitter,Stærk,Anis,11

@@ -1,0 +1,9 @@
+id,navn,farve_id,vægt,surhed_id,styrke_id,smag_id,omkostninger
+1,Jordbær,1,11,1,1,1,16
+2,Appelsin,2,12,1,1,2,13
+3,Citron,3,10,2,3,3,14
+4,Salmiaktop,4,6,1,3,4,12
+5,Blå Haj,5,22,3,2,5,19
+6,Rød Perle,1,8,1,2,1,9
+7,Gul Perle,3,8,2,2,3,10
+8,Blå Perle,5,8,3,3,5,11
