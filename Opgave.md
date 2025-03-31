@@ -29,27 +29,36 @@ Forklaring følger også i undervisningen
 Skriv en sql sætning for hver af følgende
 
 2.1	Udskriv alle informationer om alle bolcher.
-
+`SELECT * FROM Bolcher`
 
 2.2	Find og udskriv navnene på alle de røde bolcher.
-
+`SELECT navn FROM Bolcher WHERE farve="Rød"`
 
 2.3	Find og udskriv navnene på alle de røde og de blå bolcher, i samme SQL udtræk.
+`SELECT navn FROM Bolcher WHERE farve="Rød" OR farve="Blå"`
 
 2.4	Find og udskriv navnene på alle bolcher, der ikke er røde, sorteret alfabetisk.
+`SELECT navn FROM Bolcher WHERE NOT farve="Rød" ORDER BY navn`
+el. `SELECT navn FROM Bolcher WHERE farve!="Rød" ORDER BY navn`
 
 2.5	Find og udskriv navnene på alle bolcher som starter med et “B”.
+`SELECT navn FROM Bolcher WHERE navn LIKE "B%"`
 
 2.6	Find og udskriv navene på alle bolcher, hvor der i navnet findes mindst ét “e”.
+`SELECT navn FROM Bolcher WHERE navn LIKE '%E'`
 
 2.7	Find og udskriv navn og vægt på alle bolcher der vejer mindre end 10 gram, sorter stigende efter vægt.
-
+`SELECT navn FROM Bolcher WHERE vægt <10 ORDER BY vægt DESC`
 
 2.8	Find og udskriv navne på alle bolcher, der vejer mellem 10 og 12 gram (begge tal inklusiv), sorteret alfabetisk og derefter vægt.
+`SELECT navn FROM Bolcher WHERE vægt >=10 AND vægt <=12 ORDER BY navn`
+`SELECT navn FROM Bolcher WHERE vægt >=10 AND vægt <=12 ORDER BY vægt`  
 
 2.9	Find og udskriv de tre største (tungeste) bolcher.
+`SELECT * FROM Bolcher ORDER BY vægt DESC LIMIT 3`
 
 2.10 Udskriv alle informationer om et tilfældigt bolche, udvalgt af systemet (sql).
+`SELECT * FROM Bolcher ORDER BY RANDOM() LIMIT 1`
 
 ## Øvelse 3
 3.1	Normaliser tabellen Bolcher så der dannes ”domænetabeller” til de felter hvor flere bolcher ofte har samme værdi.
