@@ -29,62 +29,62 @@ Forklaring følger også i undervisningen
 Skriv en sql sætning for hver af følgende
 
 2.1	Udskriv alle informationer om alle bolcher.
-~~~
+~~~SQL
 SELECT * FROM Bolscher
 ~~~
 
 2.2	Find og udskriv navnene på alle de røde bolcher.
-~~~
+~~~SQL
 SELECT navn FROM Bolscher WHERE farve="Rød"
 ~~~
 
 2.3	Find og udskriv navnene på alle de røde og de blå bolcher, i samme SQL udtræk.
-~~~
+~~~SQL
 SELECT navn FROM Bolscher WHERE farve="Rød" OR farve="Blå"
 ~~~
 
 2.4	Find og udskriv navnene på alle bolcher, der ikke er røde, sorteret alfabetisk.
-~~~
+~~~SQL
 SELECT navn FROM Bolscher WHERE NOT farve="Rød" ORDER BY navn
 ~~~
 el. 
-~~~
+~~~SQL
 SELECT navn FROM Bolscher WHERE farve!="Rød" ORDER BY navn
 ~~~
 
 2.5	Find og udskriv navnene på alle bolcher som starter med et “B”.
-~~~
+~~~SQL
 SELECT navn FROM Bolscher WHERE navn LIKE "B%"
 ~~~
 
 2.6	Find og udskriv navene på alle bolcher, hvor der i navnet findes mindst ét “e”.
-~~~
+~~~SQL
 SELECT navn FROM Bolscher WHERE navn LIKE "%E%"
 ~~~
 
 2.7	Find og udskriv navn og vægt på alle bolcher der vejer mindre end 10 gram, sorter stigende efter vægt.
-~~~
+~~~SQL
 SELECT navn,vægt FROM Bolscher WHERE vægt <10 ORDER BY vægt ASC
 ~~~
 
 2.8	Find og udskriv navne på alle bolcher, der vejer mellem 10 og 12 gram (begge tal inklusiv), sorteret alfabetisk og derefter vægt.
-~~~
+~~~SQL
 SELECT navn, vægt FROM Bolscher WHERE vægt >=10 AND vægt <=12 ORDER BY navn,vægt
 ~~~
 
 2.9	Find og udskriv de tre største (tungeste) bolcher.
-~~~
+~~~SQL
 SELECT * FROM Bolscher ORDER BY vægt DESC LIMIT 3
 ~~~
 
 2.10 Udskriv alle informationer om et tilfældigt bolche, udvalgt af systemet (sql).
-~~~
+~~~SQL
 SELECT * FROM Bolscher ORDER BY RANDOM() LIMIT 1
 ~~~
 
 ## Øvelse 3
 3.1	Normaliser tabellen Bolscher så der dannes ”domænetabeller” til de felter hvor flere bolcher ofte har samme værdi.
-~~~
+~~~SQL
 CREATE TABLE Bolscher_Normalized (
     id INTEGER PRIMARY KEY,
     navn TEXT NOT NULL,
@@ -100,7 +100,7 @@ CREATE TABLE Bolscher_Normalized (
     FOREIGN KEY (smag_id) REFERENCES Smag(id)
 );`
 ~~~
-~~~
+~~~SQL
 INSERT INTO Bolscher_Normalized (id, navn, farve_id, vægt, surhed_id, styrke_id, smag_id, omkostninger)
 SELECT 
     b.id, 
@@ -116,7 +116,7 @@ FROM Bolscher b;
 
 ## Øvelse 4
 4.1	Udskriv alle informationer om alle bolcher.
-~~~
+~~~SQL
 SELECT 
 bo_no.id,bo_no.navn,bo_no.vægt,bo_no.omkostninger,
 fa.farve, sm.smag, su.surhed, st.styrke
@@ -129,7 +129,7 @@ JOIN Styrke st ON bo_no.styrke_id = st.id
 ~~~
 
 4.2	Find og udskriv navnene på alle de røde bolcher.
-~~~
+~~~SQL
 SELECT 
 bo_no.navn,
 fa.farve
@@ -140,7 +140,7 @@ WHERE fa.farve = "Rød"
 ~~~
 
 4.3	Find og udskriv navnene på alle de røde og de blå bolcher, i samme SQL udtræk.
-~~~
+~~~SQL
 SELECT 
 bo_no.navn,
 fa.farve
@@ -150,12 +150,12 @@ JOIN Farve fa ON bo_no.farve_id = fa.id
 WHERE fa.farve = "Rød" OR fa.farve = "Blå"
 ~~~
 Alt:
-~~~
+~~~SQL
 WHERE fa.farve IN ("Rød","Blå");
 ~~~
 
 4.4	Find og udskriv navnene på alle bolcher, der ikke er røde, sorteret alfabetisk.
-~~~
+~~~SQL
 SELECT 
 bo_no.navn,
 fa.farve
@@ -165,12 +165,12 @@ JOIN Farve fa ON bo_no.farve_id = fa.id
 WHERE NOT fa.farve = "Rød" ORDER BY navn
 ~~~
 Alt:
-~~~
+~~~SQL
 WHERE NOT fa.farve IN ("Rød") ORDER BY navn
 ~~~
 
 4.5	Find og udskriv navnene på alle bolcher som starter med et “B”.
-~~~
+~~~SQL
 SELECT 
 navn
  
@@ -179,13 +179,13 @@ WHERE navn LIKE "B%"
 ~~~
 
 Tip: Tilføj dette i toppen (før select), hvis man ønsker case-sensetive search
-~~~
+~~~SQL
 PRAGMA case_sensitive_like=ON;
 ~~~
 
 
 4.6	Find og udskriv navene på alle bolcher, hvor der i navnet findes mindst ét “e”.
-~~~
+~~~SQL
 SELECT 
 navn
  
@@ -194,12 +194,12 @@ WHERE navn LIKE "%E%"
 ~~~
 
 Tip: Tilføj dette i toppen (før select), hvis man ønsker case-sensetive search
-~~~
+~~~SQL
 PRAGMA case_sensitive_like=ON;
 ~~~
 
 4.7	Find og udskriv navn og vægt på alle bolcher der vejer mindre end 10 gram, sorter stigende efter vægt.
-~~~
+~~~SQL
 SELECT 
 navn, vægt
  
@@ -208,7 +208,7 @@ WHERE vægt <10 ORDER BY vægt ASC
 ~~~
 
 4.8	Find og udskriv navne på alle bolcher, der vejer mellem 10 og 12 gram (begge tal inklusiv), sorteret alfabetisk og derefter vægt.
-~~~
+~~~SQL
 SELECT 
 navn,vægt
  
@@ -217,7 +217,7 @@ WHERE vægt BETWEEN 10 AND 12 ORDER BY navn,vægt
 ~~~
 
 4.9	Find og udskriv de tre største (tungeste) bolcher.
-~~~
+~~~SQL
 SELECT 
 bo_no.id,bo_no.navn,bo_no.vægt,bo_no.omkostninger,
 fa.farve, sm.smag, su.surhed, st.styrke
@@ -231,7 +231,7 @@ ORDER BY bo_no.vægt DESC LIMIT 3
 ~~~
 
 4.10 Udskriv alle informationer om et tilfældigt bolche, udvalgt af systemet (sql).
-~~~
+~~~SQL
 SELECT 
 bo_no.id,bo_no.navn,bo_no.vægt,bo_no.omkostninger,
 fa.farve, sm.smag, su.surhed, st.styrke
@@ -248,7 +248,7 @@ ORDER BY RANDOM() LIMIT 1
 Nettopris for et bolche er råvareprisen plus 250 % (begge uden moms) 
 
 5.1	Udskriv en prisliste med bolchenavn og kilopris henholdsvis med og uden moms
-~~~
+~~~SQL
 SELECT 
 bo_no.id,bo_no.navn,bo_no.vægt,bo_no.omkostninger,
 (bo_no.omkostninger + (bo_no.omkostninger * 2.5)) AS totalPris_uMoms,
@@ -270,7 +270,7 @@ JOIN Styrke st ON bo_no.styrke_id = st.id
 ~~6.2	Løs opgave 2.4 ved brug af NOT IN~~
 
 6.3	Udskriv hvor mange bolscher der vejer under 15 g.
-~~~
+~~~SQL
 SELECT COUNT(vægt) 
 FROM Bolscher_Normalized bo_no 
 WHERE vægt < 15
@@ -278,34 +278,34 @@ WHERE vægt < 15
 
 6.4	Udskriv hvor mange forskellige forskellige bolcher der er i tabellen
 Print alle unikke navne som text
-~~~
+~~~SQL
 SELECT DISTINCT navn FROM Bolscher_Normalized bo_no
 ~~~
 Print count af unikke navne som tal
-~~~
+~~~SQL
 SELECT COUNT(DISTINCT navn) FROM Bolscher_Normalized bo_no
 ~~~
 Bonus: Print count af unikke farver som tal
-~~~
+~~~SQL
 SELECT COUNT(DISTINCT farve_id) FROM Bolscher_Normalized bo_no
 ~~~
 
 
 6.5	Udskriv gennemsnitsprisen per bolche
 Her vælger jeg distinct igen, bare for at tage højde for evt. duplicates
-~~~
+~~~SQL
 SELECT SUM(omkostninger)/COUNT(DISTINCT navn) AS averagePrice
 FROM Bolscher_Normalized bo_no
 ~~~
 
 6.6	Udskriv navn og pris på det dyreste og billigste bolche
 Simpel måde at printe højeste og laveste omkostninger uden at printe bolsche objektet
-~~~
+~~~SQL
 SELECT MIN(omkostninger), MAX(omkostninger)
 FROM Bolscher_Normalized bo_no
 ~~~
 Her printes bolsche objekterne med:
-~~~
+~~~SQL
 SELECT * 
 FROM Bolscher_Normalized
 WHERE omkostninger = (SELECT MIN(omkostninger) FROM Bolscher_Normalized)
@@ -320,7 +320,7 @@ WHERE omkostninger = (SELECT MAX(omkostninger) FROM Bolscher_Normalized);
 
 
 SIDE-NOTE: Nedenstående query virker IKKE SQLite, men måske i andre typer SQL: 
-~~~
+~~~SQL
 (SELECT * FROM Bolscher_Normalized ORDER BY omkostninger ASC LIMIT 1)
 UNION
 (SELECT * FROM Bolscher_Normalized ORDER BY omkostninger DESC LIMIT 1);
