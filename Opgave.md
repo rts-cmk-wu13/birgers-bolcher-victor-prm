@@ -277,9 +277,19 @@ WHERE vægt < 15
 ~~~
 
 6.4	Udskriv hvor mange forskellige forskellige bolcher der er i tabellen
+Print alle unikke navne som text
 ~~~
 SELECT DISTINCT navn FROM Bolscher_Normalized bo_no
 ~~~
+Print count af unikke navne som tal
+~~~
+SELECT COUNT(DISTINCT navn) FROM Bolscher_Normalized bo_no
+~~~
+Bonus: Print count af unikke farver som tal
+~~~
+SELECT COUNT(DISTINCT farve_id) FROM Bolscher_Normalized bo_no
+~~~
+
 
 6.5	Udskriv gennemsnitsprisen per bolche
 Her vælger jeg distinct igen, bare for at tage højde for evt. duplicates
