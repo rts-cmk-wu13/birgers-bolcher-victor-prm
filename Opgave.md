@@ -270,9 +270,49 @@ JOIN Styrke st ON bo_no.styrke_id = st.id
 ~~6.2	Løs opgave 2.4 ved brug af NOT IN~~
 
 6.3	Udskriv hvor mange bolscher der vejer under 15 g.
+~~~
+SELECT COUNT(vægt) 
+FROM Bolscher_Normalized bo_no 
+WHERE vægt < 15
+~~~
 
 6.4	Udskriv hvor mange forskellige forskellige bolcher der er i tabellen
+~~~
+SELECT DISTINCT navn FROM Bolscher_Normalized bo_no
+~~~
 
 6.5	Udskriv gennemsnitsprisen per bolche
+Her vælger jeg distinct igen, bare for at tage højde for evt. duplicates
+~~~
+SELECT SUM(omkostninger)/COUNT(DISTINCT navn) AS averagePrice
+FROM Bolscher_Normalized bo_no
+~~~
 
 6.6	Udskriv navn og pris på det dyreste og billigste bolche
+Simpel måde at printe højeste og laveste omkostninger uden at printe bolsche objektet
+~~~
+SELECT MIN(omkostninger), MAX(omkostninger)
+FROM Bolscher_Normalized bo_no
+~~~
+Her printes bolsche objekterne med:
+~~~
+SELECT * 
+FROM Bolscher_Normalized
+WHERE omkostninger = (SELECT MIN(omkostninger) FROM Bolscher_Normalized)
+
+UNION
+
+SELECT * 
+FROM Bolscher_Normalized
+WHERE omkostninger = (SELECT MAX(omkostninger) FROM Bolscher_Normalized);
+~~~
+
+
+
+SIDE-NOTE: Nedenstående query virker IKKE SQLite, men måske i andre typer SQL: 
+~~~
+(SELECT * FROM Bolscher_Normalized ORDER BY omkostninger ASC LIMIT 1)
+UNION
+(SELECT * FROM Bolscher_Normalized ORDER BY omkostninger DESC LIMIT 1);
+~~~
+Husk paranteser omkring queries, in case SQL ikke kan lide at man bruge ORDER BY før en UNION
